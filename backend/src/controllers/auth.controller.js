@@ -48,6 +48,7 @@ const signup = async (req, res) => {
       user: {
         name: user.name,
         email: user.email,
+        profilePic: user.profilePic,
       },
     });
   } catch (error) {
