@@ -67,7 +67,7 @@ const login = async (req, res) => {
     const user = await UserModel.findOne({ email });
     if (!user) {
       return res.status(404).json({
-        message: "User Not Found",
+        message: "Invalid Crendentials",
         success: false,
       });
     }
