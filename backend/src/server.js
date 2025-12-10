@@ -16,7 +16,7 @@ app.use(cookieParser());
 app.use(cors());
 
 app.use("/api/auth", authRouter);
-app.use('/api/messages', messageRouter)
+app.use("/api/messages", messageRouter);
 
 app.get("/", (req, res) => {
   res.send("Welcome to QuickConnect Server");
