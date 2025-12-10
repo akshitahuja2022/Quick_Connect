@@ -11,8 +11,11 @@ import {
   signup,
   updateProfile,
 } from "../controllers/auth.controller.js";
+import { arcjetProtecton } from "../middleware/arcjet.middleware.js";
 
 const authRouter = express.Router();
+
+authRouter.use(arcjetProtecton);
 
 const upload = multer({ dest: "uploads/" });
 
@@ -27,6 +30,7 @@ authRouter.put(
   updateProfile
 );
 
+// check user is authenticate or not
 authRouter.get("/check", protectRoute, (req, res) =>
   res.status(200).json(req.user)
 );
