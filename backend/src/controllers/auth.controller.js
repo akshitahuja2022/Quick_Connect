@@ -2,6 +2,7 @@ import UserModel from "../models/user.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import cloudinary from "../lib/cloudinary.js";
 
 dotenv.config();
 
@@ -133,4 +134,38 @@ const logout = async (req, res) => {
   }
 };
 
-export { signup, login, logout };
+const updateProfile = async (req, res) => {
+  try {
+    const filepath = req.file.path;
+    if (!filepath) {
+      return res.status(400).json({ message: "Profile pic is required" });
+    }
+
+    const userId = req.user._id;
+
+    const uploadResponse = await cloudinary.uploader.upload(filepath);
+
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      userId,
+      {
+        profilePic: uploadResponse.secure_url,
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "User Profile Updated",
+      user: updatedUser,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({
+        message: "Internal Server Error",
+        success: false,
+        error: error.message,
+      });
+  }
+};
+export { signup, login, logout, updateProfile };
