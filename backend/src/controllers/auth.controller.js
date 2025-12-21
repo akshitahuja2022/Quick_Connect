@@ -54,9 +54,8 @@ const signup = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: "Internal server error",
+      message: error.message || "Internal server error",
       success: false,
-      error: error.message,
     });
   }
 };
@@ -105,9 +104,8 @@ const login = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: "Internal server error",
+      message: error.message || "Internal server error",
       success: false,
-      error: error.message,
     });
   }
 };
@@ -159,13 +157,10 @@ const updateProfile = async (req, res) => {
       user: updatedUser,
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Internal Server Error",
-        success: false,
-        error: error.message,
-      });
+    res.status(500).json({
+      message: error.message || "Internal server error",
+      success: false,
+    });
   }
 };
 export { signup, login, logout, updateProfile };
