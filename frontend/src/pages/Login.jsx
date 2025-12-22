@@ -31,7 +31,7 @@ const Login = () => {
         {
           method: "POST",
           headers: {
-            "Content-type": "application/json",
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(payload),
         }
@@ -68,7 +68,7 @@ const Login = () => {
         <div className="mt-10">
           <form
             onSubmit={handleSubmit}
-            autocomplete="off"
+            autoComplete="off"
             className="flex flex-col gap-5"
           >
             <div>

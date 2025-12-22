@@ -37,7 +37,7 @@ const SignUp = () => {
         {
           method: "POST",
           headers: {
-            "Content-type": "application/json",
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(payload),
         }
@@ -51,11 +51,11 @@ const SignUp = () => {
       }
       if (success) {
         handleSuccess(message);
-        setIsLogin(true);
-        setUser(user);
         setTimeout(() => {
           navigate("/");
         });
+        setIsLogin(true);
+        setUser(user);
       } else if (error) {
         const details = error?.details[0].message;
         handleError(details);
@@ -78,7 +78,7 @@ const SignUp = () => {
         <div className="mt-8">
           <form
             onSubmit={handleSubmit}
-            autocomplete="off"
+            autoComplete="off"
             className="flex flex-col gap-5"
           >
             <div>
