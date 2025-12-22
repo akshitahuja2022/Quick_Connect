@@ -14,15 +14,11 @@ const signupValidation = async (req, res, next) => {
 
     const { error } = schema.validate(req.body);
     if (error) {
-      return res
-        .status(400)
-        .json({ message: "Bad Requrst", success: false, error: error.message });
+      return res.status(400).json({ message: "Bad Requrst", error });
     }
     next();
   } catch (error) {
-    res
-      .status(404)
-      .json({ message: "Bad Requrst", success: false, error: error.message });
+    res.status(404).json({ message: "Bad Requrst", error });
   }
 };
 
@@ -35,15 +31,11 @@ const loginValidation = async (req, res, next) => {
 
     const { error } = schema.validate(req.body);
     if (error) {
-      return res
-        .status(400)
-        .json({ message: "Bad Requrst", success: false, error: error.message });
+      return res.status(400).json({ message: "Bad Requrst", error });
     }
     next();
   } catch (error) {
-    res
-      .status(404)
-      .json({ message: "Bad Requrst", success: false, error: error.message });
+    res.status(404).json({ message: "Bad Requrst", error });
   }
 };
 

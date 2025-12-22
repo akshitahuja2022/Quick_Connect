@@ -54,8 +54,9 @@ const signup = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: error.message || "Internal server error",
+      message: "Internal server error",
       success: false,
+      error: error.message,
     });
   }
 };
@@ -104,8 +105,9 @@ const login = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: error.message || "Internal server error",
+      message: "Internal server error",
       success: false,
+      error: error.message,
     });
   }
 };
@@ -158,8 +160,9 @@ const updateProfile = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: error.message || "Internal server error",
+      message: "Internal server error",
       success: false,
+      error: error.message,
     });
   }
 };
