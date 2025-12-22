@@ -69,20 +69,20 @@ const SignUp = () => {
   };
 
   return (
-    <div className="flex flex-row items-center justify-center gap-52">
-      <div>
-        <div className="font-bold text-center">
-          <h2 className="text-4xl">Create Account</h2>
-          <p className="text-3xl py-2">Sign up for a new account</p>
+    <div className="flex items-center justify-around">
+      <div className="m-auto md:m-20 mt-20">
+        <div className="text-center font-bold">
+          <h2 className="text-3xl sm:text-4xl md:text-3xl lg:text-4xl">Create Account</h2>
+          <p className="text-2xl sm:text-3xl md:text-2xl lg:text-3xl">Sign up for a new account</p>
         </div>
-        <div className="mt-8">
+        <div className="mt-10 lg:mt-5 ml-5">
           <form
             onSubmit={handleSubmit}
             autoComplete="off"
             className="flex flex-col gap-5"
           >
             <div>
-              <label className="block text-lg font-bold" htmlFor="fullName">
+              <label className="block font-bold" htmlFor="fullName">
                 Full Name
               </label>
               <input
@@ -95,7 +95,7 @@ const SignUp = () => {
               />
             </div>
             <div>
-              <label className="block text-lg font-bold" htmlFor="email">
+              <label className="block font-bold" htmlFor="email">
                 Email
               </label>
               <input
@@ -103,12 +103,12 @@ const SignUp = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full border border-gray-500 px-2 py-2 mt-1 rounded-md"
+                className="w-full sm:w-400 border border-gray-500 px-2 py-2 mt-1 rounded-md"
                 placeholder="Enter your email"
               />
             </div>
             <div>
-              <label className="block text-lg font-bold" htmlFor="password">
+              <label className="block font-bold" htmlFor="password">
                 Password
               </label>
               <input
@@ -121,7 +121,7 @@ const SignUp = () => {
               />
             </div>
 
-            <div className="mt-1">
+            <div className="">
               <button className="w-full btn text-white bg-gray-700 hover:btn-accent font-bold">
                 Submit
               </button>
@@ -129,7 +129,7 @@ const SignUp = () => {
 
             <div
               onClick={() => navigate("/login")}
-              className="m-auto mt-2 bg-gray-300 px-2 py-1 cursor-pointer text-lg font-semibold rounded-md"
+              className="m-auto mt-1 bg-gray-300 px-2 py-1 cursor-pointer text-lg md:text-sm lg:text-lg md:py-2 lg:py-1 font-semibold rounded-md"
             >
               Already have an account? Login{" "}
             </div>
@@ -137,7 +137,11 @@ const SignUp = () => {
         </div>
       </div>
       <div>
-        <img src="/signup.png" className="w-[100%] h-[630px]" alt="signup" />
+        <img
+          src="/signup.png"
+          className="hidden md:block md:w-full h-[600px] lg:w-full"
+          alt="signup"
+        />
       </div>
     </div>
   );

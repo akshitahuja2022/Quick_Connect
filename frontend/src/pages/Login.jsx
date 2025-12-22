@@ -59,37 +59,41 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-row items-center justify-center gap-52">
-      <div>
-        <div className="font-bold text-center">
-          <h2 className="text-4xl">Welcome Back</h2>
-          <p className="text-3xl py-2">Login to access your account</p>
+    <div className="flex items-center justify-around">
+      <div className="m-auto md:m-20 mt-20">
+        <div className="text-center font-bold">
+          <h2 className="text-3xl sm:text-4xl lg:text-4xl">
+            Welcome Back
+          </h2>
+          <p className="text-2xl sm:text-3xl lg:text-3xl">
+            Login to access your account
+          </p>
         </div>
-        <div className="mt-10">
+        <div className="mt-10 lg:mt-8 ml-2">
           <form
             onSubmit={handleSubmit}
             autoComplete="off"
             className="flex flex-col gap-5"
           >
             <div>
-              <label className="block text-lg font-bold" htmlFor="email">
+              <label className="block font-bold" htmlFor="email">
                 Email
               </label>
               <input
-                type="text"
+                type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full border border-gray-500 px-2 py-2 mt-1 rounded-md"
+                className="w-full sm:w-400 border border-gray-500 px-2 py-2 mt-1 rounded-md"
                 placeholder="Enter your email"
               />
             </div>
-            <div className="mt-1">
-              <label className="block text-lg font-bold" htmlFor="password">
+            <div>
+              <label className="block font-bold" htmlFor="password">
                 Password
               </label>
               <input
-                type="text"
+                type="password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
@@ -98,23 +102,27 @@ const Login = () => {
               />
             </div>
 
-            <div className="mt-2">
+            <div className="">
               <button className="w-full btn text-white bg-gray-700 hover:btn-accent font-bold">
                 Submit
               </button>
             </div>
 
             <div
-              onClick={() => navigate("/signup")}
-              className="m-auto mt-2 bg-gray-300 px-2 py-1 cursor-pointer text-lg font-semibold rounded-md"
+              onClick={() => navigate("/login")}
+              className="m-auto mt-1 bg-gray-300 px-2 py-1 cursor-pointer text-lg md:text-sm lg:text-lg md:py-2 lg:py-1 font-semibold rounded-md"
             >
-              Don't have an account? Sign up{" "}
+              Already have an account? Login{" "}
             </div>
           </form>
         </div>
       </div>
       <div>
-        <img src="/login.png" className="w-[100%] h-[630px]" alt="login" />
+        <img
+          src="/login.png"
+          className="hidden md:block md:w-full h-[600px] lg:w-full"
+          alt="signup"
+        />
       </div>
     </div>
   );
