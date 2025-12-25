@@ -7,6 +7,7 @@ import { LuMessageCircleMore } from "react-icons/lu";
 const Conversation = ({ selectedUser }) => {
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
+  const [img, setImg] = useState(null);
 
   useEffect(() => {
     if (!selectedUser) return;
@@ -27,7 +28,11 @@ const Conversation = ({ selectedUser }) => {
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
-    if (!text.trim()) return;
+    if (!text.trim() && !img) return;
+
+    const formData = new FormData();
+    formData.append("text", text);
+    if (img) formData.append("img", img);
     try {
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/messages/send/${
@@ -35,16 +40,15 @@ const Conversation = ({ selectedUser }) => {
         }`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ text }),
+          body: formData,
           credentials: "include",
         }
       );
       const data = await response.json();
       setMessages((prev) => [...prev, data]);
       setText("");
+      setImg(null);
+      document.getElementById("upload").value = null;
     } catch (error) {
       console.log(error);
     }
@@ -87,6 +91,13 @@ const Conversation = ({ selectedUser }) => {
               : "bg-gray-500 text-white rounded-bl-none"
           }`}
                   >
+                    {msg.image && (
+                      <img
+                        src={msg.image}
+                        alt="sent"
+                        className="w-40 rounded-md mb-2"
+                      />
+                    )}
                     {msg.text}
                   </div>
                 </div>
@@ -95,26 +106,49 @@ const Conversation = ({ selectedUser }) => {
           </div>
 
           {/* Footer part */}
-          <div className="bg-gray-700 h-20 px-10">
+          <div className="bg-gray-700 h-18 px-10">
             <form
+              encType="multipart/form-data"
               onSubmit={handleSendMessage}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleSendMessage(e);
+                }
+              }}
               className="flex gap-10 py-5 justify-between"
             >
               <input
                 type="text"
-                value={text}
-                onChange={(e) => setText(e.target.value)}
+                value={img ? img.name : text}
+                onChange={(e) => {
+                  setText(e.target.value);
+                  if (img) {
+                    setImg(null);
+                  }
+                }}
                 className="flex-1 px-3 border-none outline-none font-bold h-10 rounded-md"
                 placeholder="Type a message..."
               />
 
               <div className="flex gap-5">
-                <button type="button" className="cursor-pointer">
+                <input
+                  accept="image/*"
+                  onChange={(e) => {
+                    setImg(e.target.files[0]);
+                  }}
+                  type="file"
+                  id="upload"
+                  className="hidden"
+                />
+
+                <label htmlFor="upload" className="cursor-pointer py-1">
                   <FaImage
                     size={20}
-                    className="border h-9 w-9 p-2 bg-gray-400 rounded-md cursor-pointer"
+                    className="border h-9 w-9 p-2 bg-gray-400 rounded-md"
                   />
-                </button>
+                </label>
+
                 <button type="submit" className="cursor-pointer">
                   <BsFillSendFill
                     size={20}
