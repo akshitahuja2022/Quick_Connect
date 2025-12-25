@@ -7,14 +7,21 @@ import {
 } from "../controllers/message.controller.js";
 import { protectRoute } from "../middleware/auth.middleware.js";
 import { arcjetProtecton } from "../middleware/arcjet.middleware.js";
+import upload from "../middleware/multer.js";
 
 const messageRouter = express.Router();
 
-messageRouter.use(arcjetProtecton, protectRoute);
+// messageRouter.use(arcjetProtecton, protectRoute);
 
-messageRouter.get("/contacts", getAllContacts);
-messageRouter.get("/chats", getChatsPartners);
-messageRouter.get("/:id", getMessagesByUserId);
-messageRouter.post("/send/:id", sendMessage);
+messageRouter.get("/contacts", arcjetProtecton, protectRoute, getAllContacts);
+messageRouter.get("/chats", arcjetProtecton, protectRoute, getChatsPartners);
+messageRouter.get("/:id", arcjetProtecton, protectRoute, getMessagesByUserId);
+messageRouter.post(
+  "/send/:id",
+  upload.single("img"),
+  arcjetProtecton,
+  protectRoute,
+  sendMessage
+);
 
 export default messageRouter;
