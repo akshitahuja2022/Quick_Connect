@@ -15,7 +15,7 @@ import { arcjetProtecton } from "../middleware/arcjet.middleware.js";
 
 const authRouter = express.Router();
 
-// authRouter.use(arcjetProtecton);
+authRouter.use(arcjetProtecton);
 
 const upload = multer({ dest: "uploads/" });
 

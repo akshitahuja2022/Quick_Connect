@@ -1,0 +1,18 @@
+import React from "react";
+import Navbar from "../components/Navbar";
+import Hero from "../components/hero";
+import ChatPage from "./ChatPage";
+import Feature from "../components/Feature";
+import FeatureHighlight from "../components/FeatureHighlight";
+
+const Home = () => {
+  return (
+    <div>
+      <Hero />
+      <FeatureHighlight />
+      <Feature />
+    </div>
+  );
+};
+
+export default Home;

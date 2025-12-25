@@ -77,12 +77,12 @@ const sendMessage = async (req, res) => {
     if (!text && !image) {
       return res.status(400).json({ message: "Text or image is required." });
     }
-    if (senderId.equals(receiverId)) {
+    if (senderId === receiverId) {
       return res
         .status(400)
         .json({ message: "Cannot send message to yourself" });
     }
-    const receiverExits = await User.exists({ _id: receiverId });
+    const receiverExits = await UserModel.exists({ _id: receiverId });
     if (!receiverExits) {
       return res.status(404).json({ message: "Receiver not found" });
     }

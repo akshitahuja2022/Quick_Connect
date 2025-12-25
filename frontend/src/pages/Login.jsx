@@ -34,6 +34,7 @@ const Login = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(payload),
+          credentials: "include",
         }
       );
 
@@ -44,7 +45,7 @@ const Login = () => {
         setIsLogin(true);
         setUser(user);
         setTimeout(() => {
-          navigate("/");
+          navigate("/chatPage");
         });
       } else if (error) {
         const details = error?.details[0].message;
@@ -62,9 +63,7 @@ const Login = () => {
     <div className="flex items-center justify-around">
       <div className="m-auto md:m-20 mt-20">
         <div className="text-center font-bold">
-          <h2 className="text-3xl sm:text-4xl lg:text-4xl">
-            Welcome Back
-          </h2>
+          <h2 className="text-3xl sm:text-4xl lg:text-4xl">Welcome Back</h2>
           <p className="text-2xl sm:text-3xl lg:text-3xl">
             Login to access your account
           </p>
