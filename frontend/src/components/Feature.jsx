@@ -2,24 +2,28 @@ import React from "react";
 
 const Feature = () => {
   return (
-    <div className="flex gap-4 justify-center">
-      <div className="box1 w-[550px] h-[550px]">
-        <div className="m-2 border border-gray-400 h-[250px] rounded-xl bg-gray-800 shadow-lg">
-          <img src="/feature2.png" className="w-full h-full rounded-lg" alt="" />
+    <div className="flex flex-col sm:flex-row items-center justify-center gap-5 md:gap-10">
+      <div className="w-[300px] md:w-[400px] lg:w-[550px] h-[550px]">
+        <div className="hidden md:flex m-2 h-[250px] rounded-xl shadow-lg">
+          <img
+            src="/feature2.png"
+            className="w-full h-full rounded-lg"
+            alt=""
+          />
         </div>
 
-        <div className="flex flex-row">
-          <div className="m-2 py-8 h-[250px] w-full rounded-2xl shadow-lg">
-            <h1 className="text-center text-gray-700 font-bold text-xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="m-2 md:py-3 lg:py-8 h-[250px] w-full rounded-2xl shadow-lg">
+            <h1 className="text-center mt-5 text-gray-700 font-bold text-xl md:text-lg lg:text-xl">
               Real-Time Messaging
             </h1>
             <p className="font-semibold p-1 px-2 text-center">
-              Experience instant message delivery with a smooth chat
-              interface that keeps conversations without delays.
+              Experience instant message delivery with a smooth chat interface
+              that keeps conversations without delays.
             </p>
           </div>
-          <div className="m-2 py-8 h-[250px] w-full rounded-2xl shadow-lg">
-            <h1 className="text-center text-gray-700 font-bold text-xl">
+          <div className="m-2 md:py-3 lg:py-8 h-[250px] w-full rounded-2xl shadow-lg">
+            <h1 className="text-center mt-5 text-gray-700 font-bold text-xl md:text-lg lg:text-xl">
               Media Sharing
             </h1>
             <p className="font-semibold p-1 px-2 text-center">
@@ -29,10 +33,10 @@ const Feature = () => {
           </div>
         </div>
       </div>
-      <div className="box1 w-[550px] h-[550px]">
-        <div className="flex flex-row">
-          <div className="m-2 py-8 h-[250px] w-full rounded-2xl shadow-lg">
-            <h1 className="text-center mt-5 text-gray-700 font-bold text-xl">
+      <div className="w-[300px] md:w-[400px] lg:w-[550px] h-[550px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="m-2 md:py-3 lg:py-8 h-[250px] w-full rounded-2xl shadow-lg">
+            <h1 className="text-center mt-5 text-gray-700 font-bold text-xl md:text-lg lg:text-xl">
               Fully Responsive Design
             </h1>
             <p className="font-semibold p-1 px-2 text-center">
@@ -40,8 +44,8 @@ const Feature = () => {
               tablets, and mobile devices worldwide.
             </p>
           </div>
-          <div className="m-2 py-8 h-[250px] w-full rounded-2xl shadow-lg">
-            <h1 className="text-center mt-5 text-gray-700 font-bold text-xl">
+          <div className="m-2 md:py-3 lg:py-8 h-[250px] w-full rounded-2xl shadow-lg">
+            <h1 className="text-center mt-5 text-gray-700 font-bold text-xl md:text-lg lg:text-xl">
               Secure Authentication
             </h1>
             <p className="font-semibold p-1 px-2 text-center">
@@ -50,8 +54,12 @@ const Feature = () => {
             </p>
           </div>
         </div>
-        <div className="m-2 h-[250px] rounded-xl bg-gray-800 shadow-lg">
-          <img src="/feature1.png" className="w-full h-full rounded-lg" alt="" />
+        <div className="hidden md:flex m-2 h-[250px] rounded-xl shadow-lg">
+          <img
+            src="/feature1.png"
+            className="w-full h-full rounded-lg"
+            alt=""
+          />
         </div>
       </div>
     </div>

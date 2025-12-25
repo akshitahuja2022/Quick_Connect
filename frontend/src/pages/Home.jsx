@@ -4,6 +4,7 @@ import Hero from "../components/hero";
 import ChatPage from "./ChatPage";
 import Feature from "../components/Feature";
 import FeatureHighlight from "../components/FeatureHighlight";
+import Footer from "../components/Footer";
 
 const Home = () => {
   return (
@@ -11,6 +12,7 @@ const Home = () => {
       <Hero />
       <FeatureHighlight />
       <Feature />
+      <Footer/>
     </div>
   );
 };
