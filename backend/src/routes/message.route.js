@@ -11,8 +11,6 @@ import upload from "../middleware/multer.js";
 
 const messageRouter = express.Router();
 
-// messageRouter.use(arcjetProtecton, protectRoute);
-
 messageRouter.get("/contacts", arcjetProtecton, protectRoute, getAllContacts);
 messageRouter.get("/chats", arcjetProtecton, protectRoute, getChatsPartners);
 messageRouter.get("/:id", arcjetProtecton, protectRoute, getMessagesByUserId);
