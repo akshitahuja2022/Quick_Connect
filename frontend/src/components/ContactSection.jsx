@@ -35,8 +35,8 @@ const ContactSection = ({ onSelectUser }) => {
           >
             <div>
               <img
-                src="/avatar.png"
-                className="w-14 border rounded-full"
+                src={contact.profilePic ? contact.profilePic : "/avatar.png"}
+                className="w-16 h-16 border rounded-full"
                 alt="userProfile"
               />
             </div>

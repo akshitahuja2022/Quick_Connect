@@ -101,6 +101,7 @@ const login = async (req, res) => {
       user: {
         name: user.name,
         email: user.email,
+        profilePic: user.profilePic || null,
       },
     });
   } catch (error) {
@@ -136,23 +137,24 @@ const logout = async (req, res) => {
 
 const updateProfile = async (req, res) => {
   try {
-    const filepath = req.file.path;
-    if (!filepath) {
+    if (!req.file) {
       return res.status(400).json({ message: "Profile pic is required" });
     }
 
     const userId = req.user._id;
 
-    const uploadResponse = await cloudinary.uploader.upload(filepath);
-
+    const uploadResponse = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream((error, result) => {
+        if (result) resolve(result);
+        else reject(error);
+      });
+      stream.end(req.file.buffer);
+    });
     const updatedUser = await UserModel.findByIdAndUpdate(
       userId,
-      {
-        profilePic: uploadResponse.secure_url,
-      },
+      { profilePic: uploadResponse.secure_url },
       { new: true }
     );
-
     res.status(200).json({
       success: true,
       message: "User Profile Updated",

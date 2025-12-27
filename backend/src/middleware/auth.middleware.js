@@ -56,17 +56,17 @@ const protectRoute = async (req, res, next) => {
         .json({ message: "Unauthorized - Invaild token", success: false });
     }
 
-    const user = await UserModel.findById(decoded._id).select("-password");
+    const user = await UserModel.findById(decoded._id);
     if (!user) {
       return res
-        .status(401)
+        .status(404)
         .json({ message: "User Not found", success: false });
     }
     req.user = user;
     next();
   } catch (error) {
     return res
-      .status(401)
+      .status(500)
       .json({ message: "Internal Server Error", success: false });
   }
 };

@@ -6,7 +6,8 @@ import { handleError, handleSuccess } from "../NotifyToast/Notify";
 const Login = () => {
   const navigate = useNavigate();
 
-  const { formData, setFormData, setIsLogin, setUser } = useAuthContext();
+  const { formData, setFormData, setIsLogin, setUser, setProfilePic } =
+    useAuthContext();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,6 +45,7 @@ const Login = () => {
         handleSuccess(message);
         setIsLogin(true);
         setUser(user);
+        setProfilePic(user.profilePic || null);
         setTimeout(() => {
           navigate("/chatPage");
         });

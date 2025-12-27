@@ -62,8 +62,12 @@ const Conversation = ({ selectedUser }) => {
           <div className="flex justify-between gap-2 bg-gray-700 p-2 px-4 cursor-pointer">
             <div className="flex gap-2">
               <img
-                src="/avatar.png"
-                className="w-12 border rounded-full"
+                src={
+                  selectedUser.profilePic
+                    ? selectedUser.profilePic
+                    : "/avatar.png"
+                }
+                className="w-14 h-14 border rounded-full"
                 alt="userProfile"
               />
               {selectedUser && (
