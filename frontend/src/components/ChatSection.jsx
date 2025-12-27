@@ -34,8 +34,8 @@ const ChatSection = ({ onSelectUser }) => {
             className="flex gap-2 bg-gray-700 rounded-lg h-20 p-2 px-3 cursor-pointer"
           >
             <img
-              src="/avatar.png"
-              className="w-14 h-14 border rounded-full"
+              src={partner.profilePic ? partner.profilePic : "/avatar.png"}
+              className="w-16 h-16 border rounded-full"
               alt="userProfile"
             />
             <div className="m-3 text-white font-bold text-xl">

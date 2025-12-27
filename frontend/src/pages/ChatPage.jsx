@@ -14,7 +14,7 @@ const ChatPage = () => {
   const navigate = useNavigate();
   const [isMenu, setIsMenu] = useState(false);
   const [isActive, setIsActive] = useState("contact");
-  const { user, setIsLogin } = useAuthContext();
+  const { user, setIsLogin, profilePic, setProfilePic } = useAuthContext();
 
   const [selectedUser, setSelectedUser] = useState(null);
 
@@ -34,8 +34,37 @@ const ChatPage = () => {
       const data = await response.json();
       if (data.success) {
         handleSuccess(data.message || "Logged out successfully");
+        setProfilePic(null);
         setIsLogin(false);
         navigate("/");
+      }
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
+  const handleUploadProfile = async (file) => {
+    if (!file) return file;
+    handleSuccess("Wait a sec... uploading profile");
+    const formData = new FormData();
+    formData.append("profilePic", file);
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/auth/update-profile`,
+        {
+          method: "PUT",
+          body: formData,
+          credentials: "include",
+        }
+      );
+      const data = await response.json();
+
+      if (data.success) {
+        handleSuccess("Profile Updated Successfully");
+        setProfilePic(data.user.profilePic);
+      } else {
+        handleError(data.message || "Upload failed");
       }
     } catch (error) {
       handleError(error);
@@ -47,11 +76,24 @@ const ChatPage = () => {
       {/* Sidebar section */}
       <div className="bg-gray-300 h-screen w-1/4 shadow-lg flex flex-col">
         <div className="flex flex-row m-2">
-          <img
-            src="/avatar.png"
-            className="w-20 border rounded-full"
-            alt="userProfile"
+          <label htmlFor="profile" className="cursor-pointer">
+            <img
+              src={profilePic ? profilePic : "/avatar.png"}
+              className="w-20 h-20 border rounded-full"
+              alt="userProfile"
+            />
+          </label>
+          <input
+            onChange={async (e) => {
+              const file = e.target.files[0];
+              if (!file) return;
+              await handleUploadProfile(file);
+            }}
+            type="file"
+            id="profile"
+            className="hidden"
           />
+
           {user && (
             <div className="m-3 font-bold">
               <h2 className="text-lg text-black mb-1">{user.name}</h2>

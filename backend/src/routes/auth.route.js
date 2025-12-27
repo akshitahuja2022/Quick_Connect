@@ -1,5 +1,4 @@
 import express from "express";
-import multer from "multer";
 import {
   loginValidation,
   protectRoute,
@@ -12,12 +11,11 @@ import {
   updateProfile,
 } from "../controllers/auth.controller.js";
 import { arcjetProtecton } from "../middleware/arcjet.middleware.js";
+import upload from "../middleware/multer.js";
 
 const authRouter = express.Router();
 
 authRouter.use(arcjetProtecton);
-
-const upload = multer({ dest: "uploads/" });
 
 authRouter.post("/signup", signupValidation, signup);
 authRouter.post("/login", loginValidation, login);
