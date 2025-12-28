@@ -3,8 +3,9 @@ import { RxCross2 } from "react-icons/rx";
 import { FaImage } from "react-icons/fa";
 import { BsFillSendFill } from "react-icons/bs";
 import { LuMessageCircleMore } from "react-icons/lu";
+import { IoArrowBack } from "react-icons/io5";
 
-const Conversation = ({ selectedUser }) => {
+const Conversation = ({ selectedUser, onBack }) => {
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
@@ -57,9 +58,12 @@ const Conversation = ({ selectedUser }) => {
   return (
     <>
       {selectedUser ? (
-        <div className="flex flex-col h-screen">
+        <div className="w-full flex flex-col h-screen">
           {/* header part */}
-          <div className="flex justify-between gap-2 bg-gray-700 p-2 px-4 cursor-pointer">
+          <div className="flex sm:justify-between gap-5 bg-gray-700 p-2 px-2 sm:px-4 cursor-pointer">
+            <button onClick={onBack} className="text-gray-400 sm:hidden">
+              <IoArrowBack size={24} />
+            </button>
             <div className="flex gap-2">
               <img
                 src={
@@ -78,7 +82,7 @@ const Conversation = ({ selectedUser }) => {
             </div>
           </div>
           {/* Middle part */}
-          <div className="flex-1 overflow-y-auto bg-gray-100 p-4 space-y-3">
+          <div className="flex-1 overflow-y-auto bg-gray-100 p-2 xs:p-4 space-y-3">
             {messages.map((msg) => {
               const isMe = msg.senderId !== selectedUser._id;
 
@@ -110,7 +114,7 @@ const Conversation = ({ selectedUser }) => {
           </div>
 
           {/* Footer part */}
-          <div className="bg-gray-700 h-18 px-10">
+          <div className="bg-gray-700 h-18 px-2 xs:px-4 lg:px-10 xl:px-14">
             <form
               encType="multipart/form-data"
               onSubmit={handleSendMessage}
@@ -120,7 +124,7 @@ const Conversation = ({ selectedUser }) => {
                   handleSendMessage(e);
                 }
               }}
-              className="flex gap-10 py-5 justify-between"
+              className="flex gap-2 xs:gap-3 py-5 justify-between"
             >
               <input
                 type="text"
@@ -131,11 +135,11 @@ const Conversation = ({ selectedUser }) => {
                     setImg(null);
                   }
                 }}
-                className="flex-1 px-3 border-none outline-none font-bold h-10 rounded-md"
+                className="flex-1 w-20 xs:w-full px-3 border-none outline-none font-bold h-10 rounded-md"
                 placeholder="Type a message..."
               />
 
-              <div className="flex gap-5">
+              <div className="flex gap-2 xs:gap-2">
                 <input
                   accept="image/*"
                   onChange={(e) => {
@@ -164,10 +168,10 @@ const Conversation = ({ selectedUser }) => {
           </div>
         </div>
       ) : (
-        <div className="text-black flex flex-col mt-72 m-auto text-center">
+        <div className="text-black flex flex-col xl:mt-72 m-auto text-center">
           <LuMessageCircleMore size={40} className="m-auto mb-3" />
           <h2 className="font-bold text-xl">Select a conversation</h2>
-          <p className="w-96 font-semibold m-auto text-center text-lg">
+          <p className="w-80 font-semibold m-auto text-center text-lg">
             Choose a contact from the sidebar to start chatting or continue a
             previous conversation
           </p>

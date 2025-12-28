@@ -110,10 +110,10 @@ const Login = () => {
             </div>
 
             <div
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/signup")}
               className="m-auto mt-1 bg-gray-300 px-2 py-1 cursor-pointer text-lg md:text-sm lg:text-lg md:py-2 lg:py-1 font-semibold rounded-md"
             >
-              Already have an account? Login{" "}
+              Already have an account? Signup{" "}
             </div>
           </form>
         </div>

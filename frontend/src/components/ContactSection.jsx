@@ -31,7 +31,7 @@ const ContactSection = ({ onSelectUser }) => {
           <div
             key={index}
             onClick={() => onSelectUser(contact)}
-            className="flex gap-2 bg-gray-700 rounded-lg h-20 p-2 px-3 cursor-pointer"
+            className="flex gap-2 bg-gray-700 mx-auto w-full xs:w-88 sm:w-full rounded-lg h-20 p-2 px-5 cursor-pointer"
           >
             <div>
               <img
@@ -40,7 +40,7 @@ const ContactSection = ({ onSelectUser }) => {
                 alt="userProfile"
               />
             </div>
-            <div className="m-3 text-white font-bold text-xl">
+            <div className="m-3 text-white font-bold text-lg xs:text-xl sm:text-lg md:text-xl">
               <h2>{contact.name}</h2>
             </div>
           </div>
