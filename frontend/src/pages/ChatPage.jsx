@@ -72,67 +72,76 @@ const ChatPage = () => {
   };
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-col sm:flex-row h-screen">
       {/* Sidebar section */}
-      <div className="bg-gray-300 h-screen w-1/4 shadow-lg flex flex-col">
-        <div className="flex flex-row m-2">
-          <label htmlFor="profile" className="cursor-pointer">
-            <img
-              src={profilePic ? profilePic : "/avatar.png"}
-              className="w-20 h-20 border rounded-full"
-              alt="userProfile"
+      <div
+        className={`bg-gray-300 h-screen w-full sm:w-1/2 xl:w-1/4 shadow-lg flex flex-col
+          ${selectedUser ? "hidden sm:flex" : "flex"}
+          `}
+      >
+        <div className="flex items-center flex-row m-3 sm:m-2">
+          <div className="flex items-center m-auto gap-5 sm:gap-2">
+            <label htmlFor="profile" className="cursor-pointer">
+              <img
+                src={profilePic ? profilePic : "/avatar.png"}
+                className="w-24 h-24 sm:w-20 sm:h-20 md:w-16 md:h-16 lg:w-24 lg:h-24 border sm:border-gray-200 rounded-full"
+                alt="userProfile"
+              />
+            </label>
+            <input
+              onChange={async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                await handleUploadProfile(file);
+              }}
+              type="file"
+              id="profile"
+              className="hidden"
             />
-          </label>
-          <input
-            onChange={async (e) => {
-              const file = e.target.files[0];
-              if (!file) return;
-              await handleUploadProfile(file);
-            }}
-            type="file"
-            id="profile"
-            className="hidden"
-          />
 
-          {user && (
-            <div className="m-3 font-bold">
-              <h2 className="text-lg text-black mb-1">{user.name}</h2>
-              <p className="text-gray-900">{user.email}</p>
-            </div>
-          )}
+            {user && (
+              <div className="m-3 font-bold">
+                <h2 className="text-xl xs:text-2xl sm:text-lg text-black mb-1">
+                  {user.name}
+                </h2>
+                <p className="text-gray-900">{user.email}</p>
+              </div>
+            )}
+          </div>
 
           <div
             onClick={() => setIsMenu(!isMenu)}
-            className="m-2 mt-7 ml-24 cursor-pointer font-bold"
+            className="hidden xs:block relative m-2 mt-7 sm:ml-14 cursor-pointer font-bold"
           >
             <IoSettings size={25} />
-          </div>
 
-          {isMenu && (
-            <div className="text-black flex flex-col gap-1 absolute top-16 left-40 bg-stone-400 w-40 h-24 rounded-md">
-              <Link to="/" className="flex gap-2 m-2 px-2 font-bold">
-                <IoIosHome className="mt-1 text-lg" /> <span>Home</span>
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="flex gap-2 px-2 m-2 font-bold"
-              >
-                <IoLogOut className="mt-1 text-lg" /> <span>Logout</span>
-              </button>
-            </div>
-          )}
+            {isMenu && (
+              <div className="text-black hidden xs:flex flex-col gap-1 absolute top-6 right-5 bg-stone-400 w-40 h-24 rounded-md">
+                <Link to="/" className="flex gap-2 m-2 px-2 font-bold">
+                  <IoIosHome className="mt-1 text-lg" /> <span>Home</span>
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="flex gap-2 px-2 m-2 font-bold"
+                >
+                  <IoLogOut className="mt-1 text-lg" /> <span>Logout</span>
+                </button>
+              </div>
+            )}
+          </div>
         </div>
+
         {/* Buttons  */}
-        <div className="flex ml-2 gap-5">
+        <div className="flex justify-center gap-3 sm:ml-2 sm:gap-5 md:gap-2">
           <button
             onClick={() => setIsActive("chat")}
-            className={`btn hover:bg-stone-400 hover:text-black w-40 mt-3 border-none font-bold bg-gray-700 text-white  focus:bg-stone-400 focus:text-black`}
+            className={`btn hover:bg-stone-400 hover:text-black w-36 xs:w-44 sm:w-28 md:w-36 xl:w-40 sm:px-1 mt-3 border-none font-bold bg-gray-700 text-white  focus:bg-stone-400 focus:text-black`}
           >
             Chat Section
           </button>
           <button
             onClick={() => setIsActive("contact")}
-            className={`btn hover:bg-stone-400 hover:text-black w-40 mt-3 border-none font-bold bg-gray-700 text-white  focus:bg-stone-400 focus:text-black`}
+            className={`btn hover:bg-stone-400 hover:text-black w-36 xs:w-44 sm:w-28 md:w-36 xl:w-40 sm:px-1 mt-3 border-none font-bold bg-gray-700 text-white  focus:bg-stone-400 focus:text-black`}
           >
             Contact Details
           </button>
@@ -149,9 +158,18 @@ const ChatPage = () => {
           </div>
         </div>
       </div>
+
       {/* Conversation section */}
-      <div className="w-3/4">
-        <Conversation selectedUser={selectedUser} />
+      <div
+        className={`
+    w-full sm:w-1/2 md:w-3/4
+    ${selectedUser ? "flex" : "hidden sm:flex"}
+  `}
+      >
+        <Conversation
+          onBack={() => setSelectedUser(null)}
+          selectedUser={selectedUser}
+        />
       </div>
     </div>
   );
