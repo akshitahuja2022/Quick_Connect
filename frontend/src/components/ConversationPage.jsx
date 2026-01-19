@@ -82,7 +82,7 @@ const Conversation = ({ selectedUser, onBack }) => {
             </div>
           </div>
           {/* Middle part */}
-          <div className="flex-1 overflow-y-auto bg-gray-100 p-2 xs:p-4 space-y-3">
+          <div className="flex-1 overflow-y-auto bg-gray-100 p-2 xs:p-4 space-y-3 overflow-x-hidden">
             {messages.map((msg) => {
               const isMe = msg.senderId !== selectedUser._id;
 
