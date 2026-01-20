@@ -5,10 +5,9 @@ import dotenv from "dotenv";
 import connectDb from "./config/db.js";
 import authRouter from "./routes/auth.route.js";
 import messageRouter from "./routes/message.route.js";
+import { app, server } from "./lib/socket.js";
 dotenv.config();
 connectDb();
-
-const app = express();
 
 const PORT = process.env.PORT || 4000;
 app.use(express.json());
@@ -27,6 +26,6 @@ app.get("/", (req, res) => {
   res.send("Welcome to QuickConnect Server");
 });
 
-app.listen(process.env.PORT, (req, res) => {
+server.listen(process.env.PORT, (req, res) => {
   console.log("Server is running on http://localhost:4000");
 });
