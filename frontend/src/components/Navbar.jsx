@@ -3,7 +3,7 @@ import { IoMenu } from "react-icons/io5";
 import { useState } from "react";
 import { useAuthContext } from "../context/authContext";
 import { handleError, handleSuccess } from "../NotifyToast/Notify";
-
+import socket from "../socket/socket";
 const Navbar = () => {
   const navigate = useNavigate();
   const [isMenu, setIsMenu] = useState(false);
@@ -17,10 +17,11 @@ const Navbar = () => {
         {
           method: "POST",
           credentials: "include",
-        }
+        },
       );
       const data = await response.json();
-      if (data.success) {
+      if (data.success) { 
+        socket.disconnect();
         handleSuccess(data.message || "Logged out successfully");
         setIsLogin(false);
         setIsProfile(false);
