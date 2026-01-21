@@ -7,7 +7,7 @@ export const socketAuthMiddleware = async (socket, next) => {
   try {
     const token = socket.handshake.headers.cookie
       ?.split("; ")
-      .find((row) => row.startsWith("jwt="))
+      .find((row) => row.startsWith("usertoken="))
       ?.split("=")[1];
 
     if (!token) {
@@ -21,7 +21,7 @@ export const socketAuthMiddleware = async (socket, next) => {
       return next(new Error("Unauthorized- Invalid Token"));
     }
 
-    const user = await UserModel.findById(decoded.userId).select("-password");
+    const user = await UserModel.findById(decoded._id).select("-password");
     if (!user) {
       console.log("Socket connection rejected: User not found");
       return next(new Error("User not found"));
@@ -31,9 +31,7 @@ export const socketAuthMiddleware = async (socket, next) => {
     socket.user = user;
     socket.userId = user._id.toString();
 
-    console.log(
-      `Socket authenticated for user: ${user.fullName} (${user._id})`,
-    );
+    console.log(`Socket authenticated for user: ${user.name} (${user._id})`);
     next();
   } catch (error) {
     console.log("Error in socket authentication: ", error.message);
