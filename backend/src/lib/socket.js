@@ -20,7 +20,7 @@ io.use(socketAuthMiddleware);
 const userSocketMap = {};
 
 io.on("connection", (socket) => {
-  console.log("A user connected", socket.user.fullName);
+  console.log("A user connected", socket.user.name);
 
   const userId = socket.userId;
   userSocketMap[userId] = socket.id;
@@ -29,10 +29,17 @@ io.on("connection", (socket) => {
   io.emit("getOnlineUsers", Object.keys(userSocketMap));
 
   socket.on("disconnect", () => {
-    console.log("A User disconnected", socket.user.fullName);
+    console.log("A User disconnected", socket.user.name);
     delete userSocketMap[userId];
     io.emit("getOnlineUsers", Object.keys(userSocketMap));
   });
+
+  socket.on("sendMessage", ({ receiverId, message }) => {
+    const receiverSocketId = userSocketMap[receiverId];
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("receiveMessage", message);
+    }
+  });
 });
 
-export {io, app,server}
+export { io, app, server };
