@@ -1,15 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { RxCross2 } from "react-icons/rx";
 import { FaImage } from "react-icons/fa";
 import { BsFillSendFill } from "react-icons/bs";
 import { LuMessageCircleMore } from "react-icons/lu";
 import { IoArrowBack } from "react-icons/io5";
-
+import socket from "../socket/socket";
 const Conversation = ({ selectedUser, onBack }) => {
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
+useEffect(() => {
+    if (!selectedUser) return;
 
+    socket.on("receiveMessage", (message) => {
+      if (
+        message.senderId === selectedUser._id ||
+        message.receiverId === selectedUser._id
+      ) {
+        setMessages((prev) => [...prev, message]);
+      }
+    });
+
+    return () => socket.off("receiveMessage");
+  }, [selectedUser]);
   useEffect(() => {
     if (!selectedUser) return;
     const fetchMessage = async () => {
@@ -47,6 +59,12 @@ const Conversation = ({ selectedUser, onBack }) => {
       );
       const data = await response.json();
       setMessages((prev) => [...prev, data]);
+        // emit socket event
+      socket.emit("sendMessage", {
+        receiverId: selectedUser._id,
+        message: data,
+      });
+
       setText("");
       setImg(null);
       document.getElementById("upload").value = null;

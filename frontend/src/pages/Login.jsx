@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/authContext";
 import { handleError, handleSuccess } from "../NotifyToast/Notify";
-
+import socket from "../socket/socket";
 const Login = () => {
   const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ const Login = () => {
           },
           body: JSON.stringify(payload),
           credentials: "include",
-        }
+        },
       );
 
       const { success, message, error, user } = await response.json();
@@ -46,6 +46,10 @@ const Login = () => {
         setIsLogin(true);
         setUser(user);
         setProfilePic(user.profilePic || null);
+
+        if (!socket.connected) {
+          socket.connect();
+        }
         setTimeout(() => {
           navigate("/chatPage");
         });

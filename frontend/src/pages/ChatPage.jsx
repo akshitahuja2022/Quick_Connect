@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoSettings } from "react-icons/io5";
 import { IoIosHome } from "react-icons/io";
 import { IoLogOut } from "react-icons/io5";
@@ -9,13 +9,27 @@ import ContactSection from "../components/ContactSection";
 import Conversation from "../components/ConversationPage";
 import { useAuthContext } from "../context/authContext";
 import { handleError, handleSuccess } from "../NotifyToast/Notify";
-
+import socket from "../socket/socket";
 const ChatPage = () => {
   const navigate = useNavigate();
   const [isMenu, setIsMenu] = useState(false);
   const [isActive, setIsActive] = useState("contact");
   const { user, setIsLogin, profilePic, setProfilePic } = useAuthContext();
 
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("Socket Connected:", socket.id);
+    });
+
+    socket.on("disconnect", () => {
+      console.log("Socket Disconnected");
+    });
+
+    return () => {
+      socket.off("connect");
+      socket.off("disconnect");
+    };
+  }, []);
   const [selectedUser, setSelectedUser] = useState(null);
 
   const handleSelectUser = (user) => {
@@ -29,10 +43,11 @@ const ChatPage = () => {
         {
           method: "POST",
           credentials: "include",
-        }
+        },
       );
       const data = await response.json();
       if (data.success) {
+        socket.disconnect();
         handleSuccess(data.message || "Logged out successfully");
         setProfilePic(null);
         setIsLogin(false);
@@ -56,7 +71,7 @@ const ChatPage = () => {
           method: "PUT",
           body: formData,
           credentials: "include",
-        }
+        },
       );
       const data = await response.json();
 

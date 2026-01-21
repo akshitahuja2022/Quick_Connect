@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AuthContext } from "./authContext";
 import { handleError } from "../NotifyToast/Notify";
+import socket from "../socket/socket";
 
 export const AuhtContextProvider = ({ children }) => {
   const [formData, setFormData] = useState({
@@ -12,7 +13,16 @@ export const AuhtContextProvider = ({ children }) => {
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState(null);
   const [profilePic, setProfilePic] = useState(null);
+  const [onlineUsers, setOnlineUsers] = useState([]);
 
+  useEffect(() => {
+    socket.on("getOnlineUsers", (users) => {
+      console.log("Online users:", users);
+      setOnlineUsers(users);
+    });
+
+    return () => socket.off("getOnlineUsers");
+  }, []);
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -21,7 +31,7 @@ export const AuhtContextProvider = ({ children }) => {
           {
             method: "GET",
             credentials: "include",
-          }
+          },
         );
 
         if (!res.ok) throw new Error("Not authenticated");
@@ -31,11 +41,16 @@ export const AuhtContextProvider = ({ children }) => {
         setIsLogin(true);
         setUser(userData);
         setProfilePic(userData.profilePic || null);
+
+        if (!socket.connected) {
+          socket.connect();
+        }
       } catch (error) {
         handleError(error);
         setIsLogin(false);
         setUser(null);
         setProfilePic(null);
+        socket.disconnect();
       }
     };
 
@@ -53,6 +68,8 @@ export const AuhtContextProvider = ({ children }) => {
         setUser,
         profilePic,
         setProfilePic,
+        onlineUsers,
+        setOnlineUsers,
       }}
     >
       {children}
