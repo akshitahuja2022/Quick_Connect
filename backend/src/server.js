@@ -10,13 +10,14 @@ dotenv.config();
 connectDb();
 
 const PORT = process.env.PORT || 4000;
+app.set("trust proxy", true);
 app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
     origin: process.env.FRONTEND_URL, // Vite default
     credentials: true,
-  })
+  }),
 );
 
 app.use("/api/auth", authRouter);
