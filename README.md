@@ -2,6 +2,9 @@
 
 Quick_Connect is a **real-time chat application** built using the **MERN stack** with **Socket.IO** for instant messaging. It allows users to securely authenticate, connect with contacts, exchange messages in real time, share images, and manage profile photos.
 
+🌐 Live Demo
+
+Frontend (React + Vite): https://quick-connect-59u2.onrender.com
 ---
 
 ## 📌 Features
